@@ -122,13 +122,18 @@ namespace ArenaBreak.Controllers
 
     private void UpdateMovement()
     {
-        if (characterController.isGrounded && verticalVelocity < 0f)
+        bool isGrounded = characterController.isGrounded;
+        if (isGrounded)
+        {
             verticalVelocity = -2f;
 
-        if (characterController.isGrounded && jumpAction.WasPressedThisFrame())
-            verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
-        verticalVelocity += gravity * Time.deltaTime;
+            if (jumpAction.WasPressedThisFrame())
+                verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+        else
+        {
+            verticalVelocity += gravity * Time.deltaTime;
+        }
 
         Vector2 moveInput = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
         Vector3 horizontalMove = transform.right * moveInput.x + transform.forward * moveInput.y;
