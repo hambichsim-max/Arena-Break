@@ -1,4 +1,5 @@
 using System.Collections;
+using ArenaBreak.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ namespace ArenaBreak.Player
         [Header("Weapon")]
         [SerializeField, Min(0f)] private float _fireInterval = 0.15f;
         [SerializeField, Min(0f)] private float _range = 50f;
+        [SerializeField, Min(1)] private int _damage = 10;
         [SerializeField, Min(1)] private int _magazineCapacity = 12;
         [SerializeField, Min(0f)] private float _reloadDuration = 1.5f;
 
@@ -133,7 +135,10 @@ namespace ArenaBreak.Player
 
             Ray ray = new Ray(_cameraPivot.position, _cameraPivot.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, _range))
+            {
+                hit.collider.GetComponentInParent<IDamageable>()?.TakeDamage(_damage);
                 ShowHitMarker(hit.point);
+            }
 
             Debug.LogFormat(this, "Ammo: {0}/{1}", _remainingAmmo, _magazineCapacity);
         }
