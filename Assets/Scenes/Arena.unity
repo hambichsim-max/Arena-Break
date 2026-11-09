@@ -1088,6 +1088,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1993861842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1130927810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1130927812}
+  - component: {fileID: 1130927811}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1130927811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130927810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 473f2502dfd0fbe44943d0e3dfeed7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Core.WaveSpawner
+  _waves:
+  - {fileID: 11400000, guid: beb5742a9a86ec946b3bb8e2cf1e168c, type: 2}
+  - {fileID: 11400000, guid: ae9590016d1507344b9ed35fa4c7cad6, type: 2}
+  - {fileID: 11400000, guid: 834c24ac51ca5144daabb4c58fc6454d, type: 2}
+  _spawnPoints: {fileID: 1993861842}
+  _player: {fileID: 1839395903}
+  _intermission: 3
+  _navMeshSampleDistance: 2
+--- !u!4 &1130927812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130927810}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1351349720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,3 +1868,4 @@ SceneRoots:
   - {fileID: 1993861842}
   - {fileID: 1839395903}
   - {fileID: 1351349721}
+  - {fileID: 1130927812}
