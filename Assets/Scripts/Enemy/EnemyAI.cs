@@ -19,6 +19,7 @@ namespace ArenaBreak.Enemy
 
         private Health _health;
         private NavMeshAgent _agent;
+        private Collider _body;
         private IDamageable _targetHealth;
         private State _state;
         private float _nextAttack;
@@ -28,6 +29,7 @@ namespace ArenaBreak.Enemy
         {
             _health = GetComponent<Health>();
             _agent = GetComponent<NavMeshAgent>();
+            _body = GetComponent<Collider>();
             SetTarget(_player);
         }
 
@@ -43,6 +45,8 @@ namespace ArenaBreak.Enemy
         {
             _state = State.Idle;
             _nextAttack = 0f;
+            if (_body != null)
+                _body.enabled = true;
             _health.Died += Die;
         }
 
@@ -87,6 +91,8 @@ namespace ArenaBreak.Enemy
         private void Die()
         {
             _state = State.Dead;
+            if (_body != null)
+                _body.enabled = false;
             if (_agent.isOnNavMesh)
                 _agent.isStopped = true;
             StartCoroutine(RemoveAfterDelay());

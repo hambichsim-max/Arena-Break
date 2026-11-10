@@ -22,6 +22,13 @@ namespace ArenaBreak.UI
 
         private void Awake()
         {
+            if (_health == null || _weapon == null || _waves == null || _game == null)
+            {
+                Debug.LogError("Assign health, weapon, wave spawner and game manager to the HUD.", this);
+                enabled = false;
+                return;
+            }
+
             var overlay = new GameObject("HUD Canvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler));
             _root = (RectTransform)overlay.transform;
             _root.SetParent(transform, false);
@@ -57,6 +64,9 @@ namespace ArenaBreak.UI
 
         private void OnDisable()
         {
+            if (_root == null)
+                return;
+
             _health.HealthChanged -= UpdateHealth;
             _weapon.AmmoChanged -= UpdateAmmo;
             _waves.WaveStarted -= UpdateWave;

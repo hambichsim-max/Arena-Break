@@ -174,7 +174,10 @@ namespace ArenaBreak.Player
 
             Collider markerCollider = marker.GetComponent<Collider>();
             if (markerCollider != null)
+            {
+                markerCollider.enabled = false;
                 Destroy(markerCollider);
+            }
 
             Renderer markerRenderer = marker.GetComponent<Renderer>();
             if (_hitMarkerMaterial != null)
