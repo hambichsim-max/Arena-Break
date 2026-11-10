@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 105}
   - component: {fileID: 106}
   - component: {fileID: 107}
+  - component: {fileID: 109}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -37,6 +38,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 100}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 82734fa1fa25440da84ba6e8d00e9ff7, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Enemy.HitFlash
 --- !u!23 &102
 MeshRenderer:
   m_ObjectHideFlags: 0
