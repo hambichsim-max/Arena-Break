@@ -18,6 +18,7 @@ namespace ArenaBreak.Core
 
         private readonly Dictionary<Health, Action> _alive = new();
         private readonly List<Transform> _points = new();
+        private readonly Dictionary<EnemyAI, Stack<EnemyAI>> _pools = new();
         private bool _started;
 
         public event Action<int> WaveStarted;
@@ -94,7 +95,7 @@ namespace ArenaBreak.Core
                     continue;
 
                 Vector3 position = hit.position + Vector3.up * agent.baseOffset;
-                EnemyAI enemy = Instantiate(prefab, position, point.rotation);
+                EnemyAI enemy = Rent(prefab, position, point.rotation);
                 enemy.SetTarget(_player);
                 Health health = enemy.GetComponent<Health>();
                 Action onDied = () => Forget(health);
@@ -103,6 +104,32 @@ namespace ArenaBreak.Core
                 return true;
             }
             return false;
+        }
+
+        private EnemyAI Rent(EnemyAI prefab, Vector3 position, Quaternion rotation)
+        {
+            if (!_pools.TryGetValue(prefab, out Stack<EnemyAI> pool))
+            {
+                pool = new Stack<EnemyAI>();
+                _pools.Add(prefab, pool);
+            }
+
+            if (pool.Count > 0)
+            {
+                EnemyAI reused = pool.Pop();
+                reused.transform.SetPositionAndRotation(position, rotation);
+                reused.GetComponent<Health>().ResetHealth();
+                reused.gameObject.SetActive(true);
+                return reused;
+            }
+
+            EnemyAI enemy = Instantiate(prefab, position, rotation, transform);
+            enemy.SetPoolReturn(dead =>
+            {
+                dead.gameObject.SetActive(false);
+                pool.Push(dead);
+            });
+            return enemy;
         }
 
         private void Forget(Health health)

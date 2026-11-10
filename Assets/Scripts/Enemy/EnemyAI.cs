@@ -22,6 +22,7 @@ namespace ArenaBreak.Enemy
         private IDamageable _targetHealth;
         private State _state;
         private float _nextAttack;
+        private System.Action<EnemyAI> _returnToPool;
 
         private void Awake()
         {
@@ -36,7 +37,14 @@ namespace ArenaBreak.Enemy
             _targetHealth = player != null ? player.GetComponent<IDamageable>() : null;
         }
 
-        private void OnEnable() => _health.Died += Die;
+        internal void SetPoolReturn(System.Action<EnemyAI> returnToPool) => _returnToPool = returnToPool;
+
+        private void OnEnable()
+        {
+            _state = State.Idle;
+            _nextAttack = 0f;
+            _health.Died += Die;
+        }
 
         private void OnDisable()
         {
@@ -87,7 +95,10 @@ namespace ArenaBreak.Enemy
         private IEnumerator RemoveAfterDelay()
         {
             yield return new WaitForSeconds(_deathDelay);
-            Destroy(gameObject);
+            if (_returnToPool != null)
+                _returnToPool(this);
+            else
+                Destroy(gameObject);
         }
     }
 }

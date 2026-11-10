@@ -15,6 +15,12 @@ namespace ArenaBreak.Core
 
         private void Awake() => _currentHealth = _maxHealth;
 
+        internal void ResetHealth()
+        {
+            _currentHealth = _maxHealth;
+            HealthChanged?.Invoke(_currentHealth, _maxHealth);
+        }
+
         public void TakeDamage(int amount)
         {
             if (amount <= 0 || _currentHealth <= 0)
