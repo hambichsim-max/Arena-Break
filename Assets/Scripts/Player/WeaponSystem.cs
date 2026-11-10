@@ -32,6 +32,10 @@ namespace ArenaBreak.Player
         private float _nextFireTime;
         private bool _attackArmed;
 
+        public int RemainingAmmo => _remainingAmmo;
+        public int MagazineCapacity => _magazineCapacity;
+        public event System.Action<int, int> AmmoChanged;
+
         private void Awake()
         {
             if (_inputActions == null)
@@ -141,7 +145,7 @@ namespace ArenaBreak.Player
                 ShowHitMarker(hit.point);
             }
 
-            Debug.LogFormat(this, "Ammo: {0}/{1}", _remainingAmmo, _magazineCapacity);
+            AmmoChanged?.Invoke(_remainingAmmo, _magazineCapacity);
         }
 
         private void BeginReload()
@@ -158,7 +162,7 @@ namespace ArenaBreak.Player
 
             _remainingAmmo = _magazineCapacity;
             _reloadCoroutine = null;
-            Debug.LogFormat(this, "Reload complete. Ammo: {0}/{1}", _remainingAmmo, _magazineCapacity);
+            AmmoChanged?.Invoke(_remainingAmmo, _magazineCapacity);
         }
 
         private void ShowHitMarker(Vector3 position)

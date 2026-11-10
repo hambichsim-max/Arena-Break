@@ -1996,6 +1996,7 @@ GameObject:
   - component: {fileID: 1900000021}
   - component: {fileID: 1900000022}
   - component: {fileID: 1900000023}
+  - component: {fileID: 1900000024}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2058,6 +2059,18 @@ MonoBehaviour:
   _playerController: {fileID: 633545615}
   _weaponSystem: {fileID: 633545618}
   _readyDuration: 2
+--- !u!114 &1900000024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 1900000020}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 99436fd90c3a4ca5b7edb812ca437a11, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.UI.HUDController
+  _health: {fileID: 1900000005}
+  _weapon: {fileID: 633545618}
+  _waves: {fileID: 1900000022}
+  _game: {fileID: 1900000023}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

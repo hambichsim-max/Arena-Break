@@ -25,6 +25,9 @@ namespace ArenaBreak.Core
         public event Action<int> WaveStarted;
         public event Action<int> WaveCleared;
         public event Action AllWavesCleared;
+        public event Action<int> KillCountChanged;
+        public int KillCount { get; private set; }
+        public int CurrentWave { get; private set; }
 
         private void Awake()
         {
@@ -66,6 +69,7 @@ namespace ArenaBreak.Core
                 }
 
                 int number = i + 1;
+                CurrentWave = number;
                 WaveStarted?.Invoke(number);
                 for (int j = 0; j < wave.SpawnCount; j++)
                 {
@@ -143,6 +147,8 @@ namespace ArenaBreak.Core
         {
             health.Died -= _alive[health];
             _alive.Remove(health);
+            KillCount++;
+            KillCountChanged?.Invoke(KillCount);
         }
 
         private void OnDestroy()
