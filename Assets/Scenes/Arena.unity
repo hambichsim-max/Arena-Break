@@ -824,6 +824,7 @@ GameObject:
   - component: {fileID: 633545615}
   - component: {fileID: 633545618}
   - component: {fileID: 1900000001}
+  - component: {fileID: 1900000005}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1994,6 +1995,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1900000021}
   - component: {fileID: 1900000022}
+  - component: {fileID: 1900000023}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2025,11 +2027,37 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee5e231413d041cab4bd418ce2c9b0be, type: 2}
   - {fileID: 11400000, guid: ee5e231413d041cab4bd418ce2c9b0bf, type: 2}
   - {fileID: 11400000, guid: ee5e231413d041cab4bd418ce2c9b0c0, type: 2}
+  - {fileID: 11400000, guid: ee5e231413d041cab4bd418ce2c9b0c1, type: 2}
+  - {fileID: 11400000, guid: ee5e231413d041cab4bd418ce2c9b0c2, type: 2}
   _spawnPoints: {fileID: 1993861842}
   _player: {fileID: 633545617}
+  _startAutomatically: 0
   _initialDelay: 1
   _betweenWaves: 3
   _spawnSearchRadius: 3
+--- !u!114 &1900000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 633545614}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 72ef5345f22c4149b52c16273bc0a53b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Core.Health
+  _maxHealth: 500
+  _currentHealth: 0
+--- !u!114 &1900000023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 1900000020}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 7e86d5a1f8514b46a32489ec55fe2a0b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Core.GameManager
+  _playerHealth: {fileID: 1900000005}
+  _waveSpawner: {fileID: 1900000022}
+  _playerController: {fileID: 633545615}
+  _weaponSystem: {fileID: 633545618}
+  _readyDuration: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

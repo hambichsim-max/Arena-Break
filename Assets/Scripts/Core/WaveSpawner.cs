@@ -12,6 +12,7 @@ namespace ArenaBreak.Core
         [SerializeField] private WaveData[] _waves;
         [SerializeField] private Transform _spawnPoints;
         [SerializeField] private Transform _player;
+        [SerializeField] private bool _startAutomatically = true;
         [SerializeField, Min(0f)] private float _initialDelay = 1f;
         [SerializeField, Min(0f)] private float _betweenWaves = 3f;
         [SerializeField, Min(0.1f)] private float _spawnSearchRadius = 3f;
@@ -33,7 +34,11 @@ namespace ArenaBreak.Core
                 _points.Add(point);
         }
 
-        private void Start() => StartWaves();
+        private void Start()
+        {
+            if (_startAutomatically)
+                StartWaves();
+        }
 
         public void StartWaves()
         {
