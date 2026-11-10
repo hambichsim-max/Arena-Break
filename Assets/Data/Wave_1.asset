@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a8c53ab5b7c74ba98fef8414c5a55f83, type: 3}
+  m_Name: Wave_1
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Core.WaveData
+  _enemyPrefab: {fileID: 107, guid: 1eb523112b654e8c9b037456fdd2273e, type: 3}
+  _spawnCount: 3
+  _spawnInterval: 1
