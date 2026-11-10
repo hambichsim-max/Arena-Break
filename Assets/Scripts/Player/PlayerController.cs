@@ -1,9 +1,10 @@
+using ArenaBreak.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ArenaBreak.Controllers
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CharacterController), typeof(PlayerDash))]
     public sealed class PlayerController : MonoBehaviour
     {
     [Header("Input")]
@@ -13,11 +14,6 @@ namespace ArenaBreak.Controllers
     [SerializeField, Min(0f)] private float moveSpeed = 5f;
     [SerializeField, Min(0f)] private float jumpHeight = 1.5f;
     [SerializeField] private float gravity = -20f;
-
-    [Header("Dash")]
-    [SerializeField, Min(0f)] private float _dashDistance = 5f;
-    [SerializeField, Min(0.01f)] private float _dashDuration = 0.2f;
-    [SerializeField, Min(0f)] private float _dashCooldown = 1f;
 
     [Header("Look")]
     [SerializeField, Min(0f)] private float mouseSensitivity = 0.1f;
@@ -29,15 +25,12 @@ namespace ArenaBreak.Controllers
     [SerializeField] private bool lockCursor = true;
 
     private CharacterController characterController;
+    private PlayerDash _dash;
     private InputActionMap playerActionMap;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction jumpAction;
-    private InputAction _dashAction;
     private float verticalVelocity;
-    private float _dashTimeRemaining;
-    private float _dashCooldownRemaining;
-    private Vector3 _dashDirection;
     private float pitch;
     private CursorLockMode previousCursorLockState;
     private bool previousCursorVisible;
@@ -45,6 +38,7 @@ namespace ArenaBreak.Controllers
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        _dash = GetComponent<PlayerDash>();
 
         if (inputActions == null)
         {
@@ -78,7 +72,6 @@ namespace ArenaBreak.Controllers
             return;
         }
 
-        _dashAction = new InputAction("Dash", InputActionType.Button, "<Keyboard>/q");
         pitch = NormalizeAngle(cameraPivot.localEulerAngles.x);
     }
 
@@ -88,7 +81,6 @@ namespace ArenaBreak.Controllers
             return;
 
         playerActionMap.Enable();
-        _dashAction?.Enable();
 
         if (lockCursor)
         {
@@ -102,8 +94,6 @@ namespace ArenaBreak.Controllers
     private void OnDisable()
     {
         playerActionMap?.Disable();
-        _dashAction?.Disable();
-        _dashTimeRemaining = 0f;
 
         if (lockCursor)
         {
@@ -135,9 +125,6 @@ namespace ArenaBreak.Controllers
 
     private void UpdateMovement()
     {
-        float deltaTime = Time.deltaTime;
-        _dashCooldownRemaining = Mathf.Max(0f, _dashCooldownRemaining - deltaTime);
-
         bool isGrounded = characterController.isGrounded;
         if (isGrounded)
         {
@@ -152,40 +139,13 @@ namespace ArenaBreak.Controllers
         }
 
         Vector2 moveInput = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
-
-        if (_dashAction.WasPressedThisFrame() && _dashCooldownRemaining <= 0f)
-            BeginDash(moveInput);
-
-        if (_dashTimeRemaining > 0f)
-        {
-            float dashStep = Mathf.Min(deltaTime, _dashTimeRemaining);
-            Vector3 dashDisplacement = _dashDirection * (_dashDistance / _dashDuration) * dashStep;
-            Vector3 verticalDisplacement = Vector3.up * verticalVelocity * deltaTime;
-            characterController.Move(dashDisplacement + verticalDisplacement);
-            _dashTimeRemaining -= dashStep;
-            return;
-        }
-
         Vector3 horizontalMove = transform.right * moveInput.x + transform.forward * moveInput.y;
-        Vector3 velocity = horizontalMove * moveSpeed + Vector3.up * verticalVelocity;
-
-        characterController.Move(velocity * deltaTime);
-    }
-
-    private void BeginDash(Vector2 moveInput)
-    {
-        if (_dashDistance <= 0f || _dashDuration <= 0f)
-            return;
-
-        Vector3 dashDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
-        _dashDirection = dashDirection.sqrMagnitude > 0f ? dashDirection.normalized : transform.forward;
-        _dashTimeRemaining = _dashDuration;
-        _dashCooldownRemaining = _dashCooldown;
-    }
-
-    private void OnDestroy()
-    {
-        _dashAction?.Dispose();
+        float deltaTime = Time.deltaTime;
+        Vector3 walking = horizontalMove * moveSpeed;
+        Vector3 horizontal = _dash != null && _dash.isActiveAndEnabled
+            ? _dash.GetDisplacement(walking, deltaTime)
+            : walking * deltaTime;
+        characterController.Move(horizontal + Vector3.up * (verticalVelocity * deltaTime));
     }
 
         private static float NormalizeAngle(float angle)
