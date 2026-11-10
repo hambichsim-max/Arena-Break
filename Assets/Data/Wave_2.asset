@@ -11,3 +11,5 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 107, guid: 1eb523112b654e8c9b037456fdd2273e, type: 3}
   _spawnCount: 5
   _spawnInterval: 0.8
+  _variantPrefab: {fileID: 107, guid: 947eb390ce5a49b28d3ea29f618d96c3, type: 3}
+  _variantEvery: 3

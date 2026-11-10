@@ -64,7 +64,7 @@ namespace ArenaBreak.Core
                 WaveStarted?.Invoke(number);
                 for (int j = 0; j < wave.SpawnCount; j++)
                 {
-                    if (!TrySpawn(wave.EnemyPrefab))
+                    if (!TrySpawn(wave.GetPrefab(j)))
                     {
                         Debug.LogError($"Wave {number} has no spawn point on the NavMesh.", this);
                         yield break;
@@ -97,6 +97,8 @@ namespace ArenaBreak.Core
                 Vector3 position = hit.position + Vector3.up * agent.baseOffset;
                 EnemyAI enemy = Rent(prefab, position, point.rotation);
                 enemy.SetTarget(_player);
+                if (enemy.TryGetComponent(out ChargingEnemy chargingEnemy))
+                    chargingEnemy.SetTarget(_player);
                 Health health = enemy.GetComponent<Health>();
                 Action onDied = () => Forget(health);
                 _alive.Add(health, onDied);
