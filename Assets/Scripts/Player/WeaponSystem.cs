@@ -1,3 +1,4 @@
+using ArenaBreak.Core;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,8 @@ namespace ArenaBreak.Player
         [SerializeField, Min(0f)] private float _range = 50f;
         [SerializeField, Min(1)] private int _magazineCapacity = 12;
         [SerializeField, Min(0f)] private float _reloadDuration = 1.5f;
+
+        [SerializeField, Min(1)] private int _damage = 10;
 
         [Header("Hit Marker")]
         [SerializeField] private Color _hitMarkerColor = Color.yellow;
@@ -133,7 +136,10 @@ namespace ArenaBreak.Player
 
             Ray ray = new Ray(_cameraPivot.position, _cameraPivot.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, _range))
+            {
+                hit.collider.GetComponentInParent<IDamageable>()?.TakeDamage(_damage);
                 ShowHitMarker(hit.point);
+            }
 
             Debug.LogFormat(this, "Ammo: {0}/{1}", _remainingAmmo, _magazineCapacity);
         }

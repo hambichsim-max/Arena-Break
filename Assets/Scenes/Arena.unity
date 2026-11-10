@@ -710,6 +710,7 @@ GameObject:
   - component: {fileID: 533866851}
   - component: {fileID: 533866850}
   - component: {fileID: 533866849}
+  - component: {fileID: 1900000013}
   m_Layer: 0
   m_Name: Target_3
   m_TagString: Untagged
@@ -929,6 +930,7 @@ GameObject:
   - component: {fileID: 634333917}
   - component: {fileID: 634333916}
   - component: {fileID: 634333915}
+  - component: {fileID: 1900000012}
   m_Layer: 0
   m_Name: Target_2
   m_TagString: Untagged
@@ -1796,6 +1798,7 @@ GameObject:
   - component: {fileID: 2074356413}
   - component: {fileID: 2074356412}
   - component: {fileID: 2074356411}
+  - component: {fileID: 1900000011}
   m_Layer: 0
   m_Name: Target_1
   m_TagString: Untagged
@@ -1942,6 +1945,48 @@ MonoBehaviour:
   _distance: 5
   _duration: 0.2
   _cooldown: 1
+--- !u!114 &1900000011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074356409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ef5345f22c4149b52c16273bc0a53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Core.Health
+  _maxHealth: 30
+  _currentHealth: 0
+--- !u!114 &1900000012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634333913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ef5345f22c4149b52c16273bc0a53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Core.Health
+  _maxHealth: 30
+  _currentHealth: 0
+--- !u!114 &1900000013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533866847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ef5345f22c4149b52c16273bc0a53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaBreak.Core.Health
+  _maxHealth: 30
+  _currentHealth: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
